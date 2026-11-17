@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life OS - Your Daily Companion</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <!-- Navigation Sidebar (Mobile: Bottom Bar) -->
+    <nav id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <h1 class="logo">Life OS</h1>
+        <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">
+          <span class="icon">🌙</span>
+        </button>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="#dashboard" class="nav-item active" data-nav="dashboard">
+          <span class="icon">📅</span> Today
+        </a></li>
+        <li><a href="#tasks" class="nav-item" data-nav="tasks">
+          <span class="icon">✅</span> Tasks
+        </a></li>
+        <li><a href="#habits" class="nav-item" data-nav="habits">
+          <span class="icon">🌱</span> Habits
+        </a></li>
+        <li><a href="#meals" class="nav-item" data-nav="meals">
+          <span class="icon">🍳</span> Meals
+        </a></li>
+        <li><a href="#money" class="nav-item" data-nav="money">
+          <span class="icon">💰</span> Money
+        </a></li>
+        <li><a href="#review" class="nav-item" data-nav="review">
+          <span class="icon">📊</span> Review
+        </a></li>
+        <li><a href="#settings" class="nav-item" data-nav="settings">
+          <span class="icon">⚙️</span> Settings
+        </a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <button id="addTaskBtn" class="btn btn-primary btn-block">+ Quick Add</button>
+        <button id="settingsBtn" class="btn btn-secondary btn-block" style="margin-top: 8px;">⚙️ Settings</button>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main id="main" class="main-content">
+      <!-- Dashboard Screen -->
+      <section id="dashboard" class="screen active">
+        <header class="page-header">
+          <div class="greeting">
+            <h2 id="greeting">Good morning, Alex</h2>
+            <p id="dateDisplay">Tuesday, November 17, 2026</p>
+          </div>
+          <div class="weather-placeholder">
+            <span class="weather-icon">☀️</span>
+            <span class="weather-temp">72°F</span>
+            <span class="weather-desc">Sunny</span>
+          </div>
+        </header>
+
+        <!-- Energy Level Selector -->
+        <div class="card energy-card">
+          <h3>How's your energy today?</h3>
+          <div class="energy-selector">
+            <button class="energy-btn low" data-energy="low" aria-pressed="false">
+              <span class="energy-icon">🔋</span>
+              <span class="energy-label">Low</span>
+            </button>
+            <button class="energy-btn normal" data-energy="normal" aria-pressed="true">
+              <span class="energy-icon">⚡</span>
+              <span class="energy-label">Normal</span>
+            </button>
+            <button class="energy-btn high" data-energy="high" aria-pressed="false">
+              <span class="energy-icon">🚀</span>
+              <span class="energy-label">High</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Top 3 Priorities -->
+        <div class="card priorities-card">
+          <h3>Top 3 Priorities</h3>
+          <div id="prioritiesList" class="priorities-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- What Should I Do Next? -->
+        <div class="card recommendation-card">
+          <h3>What should I do next?</h3>
+          <div id="recommendationCard" class="recommendation-content">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Daily Progress Ring -->
+        <div class="card progress-card">
+          <h3>Daily Progress</h3>
+          <div class="progress-ring-container">
+            <svg class="progress-ring" width="120" height="120">
+              <circle class="progress-ring-bg" cx="60" cy="60" r="50" />
+              <circle class="progress-ring-fill" cx="60" cy="60" r="50" />
+            </svg>
+            <div class="progress-text">
+              <span id="progressPercent">0%</span>
+              <span id="progressLabel">completed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="card timeline-card">
+          <div class="card-header">
+            <h3>Today's Timeline</h3>
+            <button id="planDayBtn" class="btn btn-secondary btn-sm">Plan my day</button>
+          </div>
+          <div id="timelineContainer" class="timeline">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <button id="addTaskQuick" class="btn btn-primary">+ Task</button>
+          <button id="addGroceryQuick" class="btn btn-secondary">+ Grocery</button>
+          <button id="planMealQuick" class="btn btn-secondary">+ Meal</button>
+          <button id="logExpenseQuick" class="btn btn-secondary">+ Expense</button>
+        </div>
+      </section>
+
+      <!-- Tasks Screen -->
+      <section id="tasks" class="screen">
+        <header class="page-header">
+          <h2>Tasks & Errands</h2>
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="home">Home</button>
+            <button class="filter-tab" data-filter="outside">Outside</button>
+            <button class="filter-tab" data-filter="quick">Quick Wins</button>
+          </div>
+        </header>
+        <div id="tasksList" class="tasks-list">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Habits Screen -->
+      <section id="habits" class="screen">
+        <header class="page-header">
+          <h2>Habits & Routines</h2>
+          <div class="view-tabs">
+            <button class="view-tab active" data-view="weekly">Weekly</button>
+            <button class="view-tab" data-view="streak">Streaks</button>
+          </div>
+        </header>
+        <div id="habitsList" class="habits-list">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Meals Screen -->
+      <section id="meals" class="screen">
+        <header class="page-header">
+          <h2>Meals & Groceries</h2>
+          <div class="action-buttons">
+            <button id="planMealBtn" class="btn btn-primary btn-sm">Plan Week</button>
+          </div>
+        </header>
+        <div class="meals-grid">
+          <div class="card meal-planner-card">
+            <h3>Weekly Meal Plan</h3>
+            <div id="mealPlanList" class="meal-plan-list">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <div class="card pantry-card">
+            <h3>Pantry Inventory</h3>
+            <div id="pantryList" class="pantry-list">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <div class="card grocery-card">
+            <h3>Smart Grocery List</h3>
+            <div id="groceryList" class="grocery-list">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Money Screen -->
+      <section id="money" class="screen">
+        <header class="page-header">
+          <h2>Money & Bills</h2>
+          <button id="addExpenseBtn" class="btn btn-primary btn-sm">+ Log Expense</button>
+        </header>
+        <div class="money-grid">
+          <div class="card budget-card">
+            <h3>Monthly Budget</h3>
+            <div class="budget-summary">
+              <div class="budget-item">
+                <span class="label">Income</span>
+                <span class="value income" id="budgetIncome">$5,000</span>
+              </div>
+              <div class="budget-item">
+                <span class="label">Spent</span>
+                <span class="value spent" id="budgetSpent">$2,340</span>
+              </div>
+              <div class="budget-item">
+                <span class="label">Remaining</span>
+                <span class="value remaining" id="budgetRemaining">$2,660</span>
+              </div>
+            </div>
+            <div class="budget-chart">
+              <canvas id="budgetChart" width="200" height="100"></canvas>
+            </div>
+          </div>
+          <div class="card bills-card">
+            <h3>Upcoming Bills</h3>
+            <div id="billsList" class="bills-list">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <div class="card expenses-card">
+            <h3>Recent Expenses</h3>
+            <div id="expensesList" class="expenses-list">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Review Screen -->
+      <section id="review" class="screen">
+        <header class="page-header">
+          <h2>Weekly Review</h2>
+        </header>
+        <div class="review-content">
+          <div class="card accomplishments-card">
+            <h3>🎉 This Week's Accomplishments</h3>
+            <div id="accomplishmentsList" class="accomplishments-list">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <div class="card unfinished-card">
+            <h3>⏳ Unfinished Items</h3>
+            <div id="unfinishedList" class="unfinished-list">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <div class="card patterns-card">
+            <h3>📈 Habit Patterns</h3>
+            <div id="habitPatterns" class="habit-patterns">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <div class="card spending-card">
+            <h3>💵 Spending Snapshot</h3>
+            <div id="spendingSnapshot" class="spending-snapshot">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <div class="card reflection-card">
+            <h3>🤔 Reflection Prompts</h3>
+            <div id="reflectionPrompts" class="reflection-prompts">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav id="bottomNav" class="bottom-nav">
+      <button class="nav-btn active" data-nav="dashboard">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Today</span>
+      </button>
+      <button class="nav-btn" data-nav="tasks">
+        <span class="nav-icon">✅</span>
+        <span class="nav-label">Tasks</span>
+      </button>
+      <button class="nav-btn" data-nav="habits">
+        <span class="nav-icon">🌱</span>
+        <span class="nav-label">Habits</span>
+      </button>
+      <button class="nav-btn" data-nav="meals">
+        <span class="nav-icon">🍳</span>
+        <span class="nav-label">Meals</span>
+      </button>
+      <button class="nav-btn" data-nav="money">
+        <span class="nav-icon">💰</span>
+        <span class="nav-label">Money</span>
+      </button>
+      <button class="nav-btn" data-nav="review">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Review</span>
+      </button>
+      <button class="nav-btn" data-nav="settings">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Settings</span>
+      </button>
+    </nav>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Modals -->
+    <div id="modalOverlay" class="modal-overlay">
+      <!-- Task Modal -->
+      <div id="taskModal" class="modal">
+        <div class="modal-content">
+          <h3>Add New Task</h3>
+          <form id="taskForm">
+            <input type="text" id="taskTitle" placeholder="What needs to be done?" required>
+            <select id="taskPriority" required>
+              <option value="high">High Priority</option>
+              <option value="medium" selected>Medium Priority</option>
+              <option value="low">Low Priority</option>
+            </select>
+            <input type="date" id="taskDueDate" required>
+            <input type="number" id="taskDuration" placeholder="Duration (min)" min="5" value="30">
+            <select id="taskEnergy">
+              <option value="low">Low Energy</option>
+              <option value="normal" selected>Normal Energy</option>
+              <option value="high">High Energy</option>
+            </select>
+            <select id="taskCategory">
+              <option value="home">Home</option>
+              <option value="outside">Outside</option>
+              <option value="phone">Phone/Computer</option>
+              <option value="quick">Quick Win</option>
+            </select>
+            <input type="text" id="taskLocation" placeholder="Location (optional)">
+            <div class="modal-actions">
+              <button type="button" class="btn btn-secondary" id="cancelTaskBtn">Cancel</button>
+              <button type="submit" class="btn btn-primary">Add Task</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Expense Modal -->
+      <div id="expenseModal" class="modal">
+        <div class="modal-content">
+          <h3>Log Expense</h3>
+          <form id="expenseForm">
+            <input type="text" id="expenseTitle" placeholder="What did you spend on?" required>
+            <input type="number" id="expenseAmount" placeholder="Amount ($)" step="0.01" required>
+            <select id="expenseCategory">
+              <option value="food">Food & Dining</option>
+              <option value="transport">Transportation</option>
+              <option value="utilities">Utilities</option>
+              <option value="shopping">Shopping</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="other">Other</option>
+            </select>
+            <input type="date" id="expenseDate" required>
+            <div class="modal-actions">
+              <button type="button" class="btn btn-secondary" id="cancelExpenseBtn">Cancel</button>
+              <button type="submit" class="btn btn-primary">Log Expense</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Meal Modal -->
+      <div id="mealModal" class="modal">
+        <div class="modal-content">
+          <h3>Plan a Meal</h3>
+          <form id="mealForm">
+            <input type="text" id="mealName" placeholder="Meal name" required>
+            <select id="mealDay">
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
+              <option value="Saturday">Saturday</option>
+              <option value="Sunday">Sunday</option>
+            </select>
+            <select id="mealType">
+              <option value="breakfast">Breakfast</option>
+              <option value="lunch">Lunch</option>
+              <option value="dinner">Dinner</option>
+            </select>
+            <textarea id="mealNotes" placeholder="Ingredients or notes..."></textarea>
+            <div class="modal-actions">
+              <button type="button" class="btn btn-secondary" id="cancelMealBtn">Cancel</button>
+              <button type="submit" class="btn btn-primary">Add Meal</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Grocery Modal -->
+      <div id="groceryModal" class="modal">
+        <div class="modal-content">
+          <h3>Add Grocery Item</h3>
+          <form id="groceryForm">
+            <input type="text" id="groceryName" placeholder="Item name" required>
+            <input type="number" id="groceryQuantity" placeholder="Quantity" step="0.01" required>
+            <select id="groceryUnit">
+              <option value="units">units</option>
+              <option value="kg">kg</option>
+              <option value="g">g</option>
+              <option value="L">L</option>
+              <option value="ml">ml</option>
+              <option value="packs">packs</option>
+            </select>
+            <select id="groceryCategory">
+              <option value="produce">Produce</option>
+              <option value="dairy">Dairy</option>
+              <option value="meat">Meat & Seafood</option>
+              <option value="bakery">Bakery</option>
+              <option value="pantry">Pantry</option>
+              <option value="frozen">Frozen</option>
+              <option value="beverages">Beverages</option>
+              <option value="household">Household</option>
+            </select>
+            <div class="modal-actions">
+              <button type="button" class="btn btn-secondary" id="cancelGroceryBtn">Cancel</button>
+              <button type="submit" class="btn btn-primary">Add to List</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
